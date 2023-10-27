@@ -2,6 +2,7 @@ package com.example.exam.service.impl;
 
 import com.example.exam.dto.TaskDTO;
 import com.example.exam.entity.Task;
+import com.example.exam.entity.TaskAssignment;
 import com.example.exam.mapper.TaskMapper;
 import com.example.exam.service.TaskService;
 import com.example.exam.vo.TaskAdminVO;
@@ -35,6 +36,10 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public int assignTask(int taskId, int userId) {
+        List<TaskAssignment> userAssign = taskMapper.getUserAssign(taskId, userId);
+        if (!userAssign.isEmpty()) {
+            throw new IllegalArgumentException("用户已经被指派");
+        }
         return taskMapper.assignTask(taskId, userId);
     }
 

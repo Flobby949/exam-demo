@@ -1,6 +1,7 @@
 package com.example.exam.mapper;
 
 import com.example.exam.entity.Task;
+import com.example.exam.entity.TaskAssignment;
 import com.example.exam.vo.TaskAdminVO;
 import com.example.exam.vo.TaskVO;
 import org.apache.ibatis.annotations.*;
@@ -22,6 +23,9 @@ public interface TaskMapper {
 
     @Select("select * from task ")
     List<Task> selectAll();
+
+    @Select("select * from task_assignment where user_id = #{userId} and task_id = #{taskId} ")
+    List<TaskAssignment> getUserAssign(int taskId, int userId);
 
     @Insert("insert into task_assignment(task_id, user_id, status) value (#{taskId}, #{userId}, 0)")
     int assignTask(int taskId, int userId);
