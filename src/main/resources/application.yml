@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://rm-cn-4xl3e1zjr00016fo.rwlb.rds.aliyuncs.com:3306/db_exam?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: Jcx@@123
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true                        # ??????
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl     # ?? SQL ??
+  mapper-locations: classpath:mapper/*.xml                    # ??Mybatis?xml??????
+  type-aliases-package: com.example.exam.entity          # ??XML??????????

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.exam.mapper.TaskMapper">
+
+    <resultMap id="taskVO" type="com.example.exam.vo.TaskVO">
+        <id column="id" property="id"/>
+        <result column="title" property="title" />
+        <result column="summary" property="summary" />
+        <result column="deadline" property="deadline" />
+        <result column="status" property="status" />
+    </resultMap>
+
+    <resultMap id="TaskAdminVO" type="com.example.exam.vo.TaskAdminVO">
+        <id column="id" property="id"/>
+        <result column="username" property="username" />
+        <result column="title" property="title" />
+        <result column="summary" property="summary" />
+        <result column="deadline" property="deadline" />
+        <result column="status" property="status" />
+    </resultMap>
+
+    <select id="selectTaskIdByUserAndStatus" resultType="java.lang.Integer">
+        select ta.task_id
+            from task_assignment ta
+        where user_id = #{userId}
+        <if test="status != null">
+            and status = #{status}
+        </if>
+    </select>
+
+
+    <select id="selectTaskByUserAndStatus" resultMap="taskVO">
+        SELECT task.id, title, summary, deadline, ta.status FROM task, task_assignment ta
+        WHERE task.id = ta.task_id
+        and ta.user_id = #{userId}
+        <if test="status != null">
+            and status = #{status}
+        </if>
+    </select>
+
+
+    <select id="allAssignedTask" resultMap="TaskAdminVO">
+        SELECT t.id, u.username, t.title, t.summary, t.deadline, ta.status FROM task_assignment ta left join task t on ta.task_id = t.id left join db_exam.user u on u.id = ta.user_id
+    </select>
+</mapper>
