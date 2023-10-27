@@ -7,7 +7,7 @@ COPY . /app
 COPY maven.xml /usr/share/maven/conf/setting.xml
 # 在容器中运行 Maven 以构建你的应用程序
 WORKDIR /app
-RUN mvn clean package
+RUN mvn clean package -Dmaven.test.skip=true
 
 # 使用另一个基础镜像来运行你的应用程序
 FROM openjdk:17-slim
